@@ -21,13 +21,17 @@ END:VCARD`;
 
 // Enregistrement du fichier VCard
 const fileName = `${firstName.toLowerCase()}.vcf`
-await Bun.write(fileName, vCard)
-console.log(`VCard created: ${fileName}`)
+Bun.write(fileName, vCard).then(() => console.info(`VCard created: ${fileName}`))
+
 
 // Génération du QR code à partir de la VCard
-const qrCodeSVG = await qrcode(vCard,  {output: "svg"})
+const qrCodeSVG = qrcode(vCard,  {
+    output: 'svg',
+    dark: 'rgb(23, 84, 255)',
+    ecl: 'HIGH',
+    border: 0,
+})
 
 // Enregistrement du QR code au format SVG
 const qrCodeFileName = `${firstName.toLowerCase()}_qrcode.svg`
-await Bun.write(qrCodeFileName, qrCodeSVG)
-console.log(`QR code (SVG) created: ${qrCodeFileName}`)
+Bun.write(qrCodeFileName, qrCodeSVG).then(() => console.info(`QR code (SVG) created: ${qrCodeFileName}`))
