@@ -1,7 +1,6 @@
-import { qrcode } from "https://deno.land/x/qrcode/mod.ts"
 import { decode as base64Decode } from 'https://deno.land/std@0.82.0/encoding/base64.ts';
-
 import { Base64 } from "https://deno.land/x/bb64/mod.ts";
+import {qrcode} from "@libs/qrcode";
 
 
 
@@ -12,6 +11,9 @@ if (!firstName || !lastName || !org || !email || !phone) {
     Deno.exit(1)
 }
 
+const encoder = new TextEncoder()
+
+// vCard
 const vCard = `
 BEGIN:VCARD
 VERSION:3.0
@@ -24,23 +26,16 @@ REV:${new Date().toISOString()}
 END:VCARD`
 
 const fileName = `${firstName.toLowerCase()}.vcf`
-Deno.writeTextFileSync(fileName, vCard)
-console.log(`VCard created: ${fileName}`)
+const dataVCard = encoder.encode(vCard)
+Deno.writeFile(fileName, dataVCard).then(() => {
+    console.info(`VCard created: ${fileName}`)
+})
 
+//qQRCode
+const svg = qrcode(vCard, { output: "svg" })
+const qrCodeFileName = `${firstName.toLowerCase()}_qrcode.svg`
+const dataSvg = encoder.encode(svg)
 
-const qrCodeSVG = (await qrcode(vCard)).split(';base64,').pop()
-
-const decodedImage = base64Decode(b64EncodeUnicode(qrCodeSVG));
-
-const qrCodeFileName = `${firstName.toLowerCase()}_qrcode.gif`
-Base64.fromBase64Uint8Array(decodedImage).toFile(qrCodeFileName)
-console.log(`QR code (SVG) created: ${qrCodeFileName}`)
-
-
-// Encoding UTF-8 ⇢ base64
-
-function b64EncodeUnicode(str: string) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode(parseInt(p1, 16))
-    }))
-}
+Deno.writeFile(qrCodeFileName, dataSvg).then(() => {
+    console.info(`QR code (SVG) created: ${qrCodeFileName}`)
+})

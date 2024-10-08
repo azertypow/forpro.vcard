@@ -1,5 +1,16 @@
 {
   "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@libs/qrcode": "jsr:@libs/qrcode@2.0.0",
+      "jsr:@libs/qrcode@^2.0.0": "jsr:@libs/qrcode@2.0.0"
+    },
+    "jsr": {
+      "@libs/qrcode@2.0.0": {
+        "integrity": "5e2b02be0bed39473289abeafd6987c3cc6e6c7410fe5236d8e3a2e72847e178"
+      }
+    }
+  },
   "redirects": {
     "https://deno.land/std/path/mod.ts": "https://deno.land/std@0.224.0/path/mod.ts",
     "https://deno.land/x/bb64/mod.ts": "https://deno.land/x/bb64@1.1.0/mod.ts",
@@ -89,5 +100,10 @@
     "https://deno.land/x/bb64@1.1.0/mod.ts": "6e059e6c8cb5ff17910adf85751b10c4628f0fa943c2b1647508aa0cb250274f",
     "https://deno.land/x/qrcode@v2.0.0/mod.ts": "3e693e8190d5fb4c6ab68a14a1a9473c325d5244fd83240b49cdecdf5fc18a1b",
     "https://deno.land/x/qrcode@v2.0.0/qrcode.js": "138f870978e21843f48d8b0855b69de6ebf430c3ab9f57c3fa2746d6fba45bf1"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@libs/qrcode@^2.0.0"
+    ]
   }
 }
