@@ -11,8 +11,8 @@ if (!firstName || !lastName || !org || !email || !phone) {
 const vCard = `
 BEGIN:VCARD
 VERSION:3.0
-FN;CHARSET=UTF-8:${firstName}
-N;CHARSET=UTF-8:;${firstName};;${lastName};
+FN;CHARSET=UTF-8:${firstName} ${lastName}
+N;CHARSET=UTF-8:${lastName};${firstName};;;
 EMAIL;CHARSET=UTF-8;type=WORK,INTERNET:${email}
 TEL;TYPE=WORK,VOICE:${phone}
 ORG;CHARSET=UTF-8:${org}
