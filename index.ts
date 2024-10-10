@@ -28,7 +28,7 @@ Bun.write(fileName, vCard).then(() => console.info(`VCard created: ${fileName}`)
 const qrCodeSVG = qrcode(vCard,  {
     output: 'svg',
     dark: 'rgb(23, 84, 255)',
-    ecl: 'HIGH',
+    ecl: 'LOW',
     border: 0,
 })
 
